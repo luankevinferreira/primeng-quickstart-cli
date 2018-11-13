@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { Car } from './domain/car';
-import { CarService } from './services/carservice';
+import {Component, OnInit} from "@angular/core";
+import {Car} from "./domain/car";
+import {CarService} from "./services/carservice";
+import {SelectItem} from "primeng/api";
+
+interface City {
+    name:string;
+    code:string;
+}
 
 export class PrimeCar implements Car {
-    constructor(public vin?, public year?, public brand?, public color?) {}
+    constructor(public vin?, public year?, public brand?, public color?) {
+    }
 }
 
 @Component({
@@ -14,28 +21,55 @@ export class PrimeCar implements Car {
 })
 export class AppComponent implements OnInit {
 
-    displayDialog: boolean;
+    displayDialog:boolean;
 
-    car: Car = new PrimeCar();
+    car:Car = new PrimeCar();
 
-    selectedCar: Car;
+    selectedCar:Car;
 
-    newCar: boolean;
+    newCar:boolean;
 
-    cars: Car[];
+    cars:Car[];
 
-    cols: any[];
+    cols:any[];
 
-    constructor(private carService: CarService) { }
+    cities1:SelectItem[];
+
+    cities2:City[];
+
+    selectedCity1:City;
+
+    selectedCity2:City;
+
+    constructor(private carService:CarService) {}
 
     ngOnInit() {
         this.carService.getCarsSmall().then(cars => this.cars = cars);
 
         this.cols = [
-            { field: 'vin', header: 'Vin' },
-            { field: 'year', header: 'Year' },
-            { field: 'brand', header: 'Brand' },
-            { field: 'color', header: 'Color' }
+            {field: 'vin', header: 'Vin'},
+            {field: 'year', header: 'Year'},
+            {field: 'brand', header: 'Brand'},
+            {field: 'color', header: 'Color'}
+        ];
+
+        //SelectItem API with label-value pairs
+        this.cities1 = [
+            {label: 'Select City', value: null},
+            {label: 'New York', value: {id: 1, name: 'New York', code: 'NY'}},
+            {label: 'Rome', value: {id: 2, name: 'Rome', code: 'RM'}},
+            {label: 'London', value: {id: 3, name: 'London', code: 'LDN'}},
+            {label: 'Istanbul', value: {id: 4, name: 'Istanbul', code: 'IST'}},
+            {label: 'Paris', value: {id: 5, name: 'Paris', code: 'PRS'}}
+        ];
+
+        //An array of cities
+        this.cities2 = [
+            {name: 'New York', code: 'NY'},
+            {name: 'Rome', code: 'RM'},
+            {name: 'London', code: 'LDN'},
+            {name: 'Istanbul', code: 'IST'},
+            {name: 'Paris', code: 'PRS'}
         ];
     }
 
@@ -56,6 +90,11 @@ export class AppComponent implements OnInit {
         this.car = null;
         this.displayDialog = false;
     }
+    
+    testDropDown() {
+        console.log("Selected City 1: ", this.selectedCity1);
+        console.log("Selected City 2: ", this.selectedCity2);
+    }
 
     delete() {
         const index = this.findSelectedCarIndex();
@@ -70,7 +109,7 @@ export class AppComponent implements OnInit {
         this.displayDialog = true;
     }
 
-    findSelectedCarIndex(): number {
+    findSelectedCarIndex():number {
         return this.cars.indexOf(this.selectedCar);
     }
 }
