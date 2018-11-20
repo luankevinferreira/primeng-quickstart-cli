@@ -10,6 +10,7 @@ import {DialogModule} from "primeng/dialog";
 import {PanelModule} from "primeng/panel";
 import {AppComponent} from "./app.component";
 import {DropdownModule} from "primeng/dropdown";
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import {DropdownModule} from "primeng/dropdown";
         DialogModule,
         ButtonModule,
         PanelModule,
-        DropdownModule
+        DropdownModule,
+        FileUploadModule
     ],
     providers: [],
     bootstrap: [AppComponent]

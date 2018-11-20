@@ -112,4 +112,11 @@ export class AppComponent implements OnInit {
     findSelectedCarIndex():number {
         return this.cars.indexOf(this.selectedCar);
     }
+
+    filename:string = "filename";
+    url:string = "http://localhost:8080/jackrabbit";
+
+    beforeUpload() {
+        console.log("before upload.");
+    }
 }
